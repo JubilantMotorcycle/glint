@@ -88,44 +88,44 @@ glintServices.factory('Votes', function($http){
   };
 });
 
-glintServices.factory('Auth', function($http, $location){
-
-  var login = function (user){
+glintServices.factory('Auth', function ($http, $location, $window) {
+  var signin = function (user) {
     return $http({
       method: 'POST',
       url: '/api/users/signin',
       data: user
     })
-    .success(function (response){
-      $location.url('/#');
-    })
-    .error(function(response){
-      $location.url('/#/login');
-    })
-    .catch(function (error) {
-      console.error('login error', error);
-    });  };
+    .then(function (resp) {
+      return resp.data.token;
+    });
+  };
 
-  var signup = function (user){
+  var signup = function (user) {
     return $http({
       method: 'POST',
       url: '/api/users/signup',
       data: user
     })
-    .success(function (response){
-      $location.url('/#');
-    })
-    .error(function(response){
-      $location.url('/#/signup');
-    })
-    .catch(function (error) {
-      console.error('signup error', error);
+    .then(function (resp) {
+      return resp.data.token;
     });
   };
 
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('com.shortly');
+  };
+
+  var signout = function () {
+    $window.localStorage.removeItem('com.shortly');
+    $location.path('/signin');
+  };
+
+
   return {
-    login: login,
-    signup: signup
+    signin: signin,
+    signup: signup,
+    isAuth: isAuth,
+    signout: signout
   };
 });
 

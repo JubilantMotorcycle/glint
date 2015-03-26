@@ -9,8 +9,6 @@ var bodyParser  = require('body-parser');
 var helpers = require('./helpers.js'); 
 // Logs requests sent from the client.
 var morgan = require('morgan'); 
-// session
-var session = require('express-session');
 
 module.exports = function (app, express) {
 
@@ -27,13 +25,6 @@ module.exports = function (app, express) {
   app.use(morgan('dev'));
   app.use(helpers.logErrors);
   app.use(helpers.handleErrors);
-  // app.use(express.cookieParser('shhhh. very secret'));
-  app.use(session({
-    genId: function(req){
-      return genuuid() //use UUID for session IDs
-    },
-    secret: "keyboard cat"
-  }));
 
   // Use the idea router for all idea requests.
   app.use('/api/ideas', ideaRouter); 

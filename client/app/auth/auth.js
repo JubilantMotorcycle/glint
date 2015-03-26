@@ -5,7 +5,7 @@
 
 angular.module('glint.auth', [])
 
-.controller('AuthCtrl', function(Auth){
+.controller('AuthCtrl', function($window, $location, Auth){
   var self = this;
   self.user = {};
 
@@ -15,8 +15,11 @@ angular.module('glint.auth', [])
     self.user.password = _.escape(self.user.password);
     var user = JSON.stringify(self.user);
 
-    Auth.login(user)
-      .then(function (response){})
+    Auth.signin(user)
+      .then(function (token){
+        $window.localStorage.setItem('com.shortly', token);
+        $location.path('/');
+      })
       .catch(function (error){
         console.error('login error', error);
       });
@@ -30,7 +33,10 @@ angular.module('glint.auth', [])
     var user = JSON.stringify(self.user);
 
     Auth.signup(user)
-      .then(function (response){})
+      .then(function (token){
+        $window.localStorage.setItem('com.shortly', token);
+        $location.path('/');
+      })
       .catch(function (error){
         console.error('signup error', error);
       });

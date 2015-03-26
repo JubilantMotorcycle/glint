@@ -4,63 +4,92 @@
 // The User controller handles requests passed from the User router.
 
 // The bcrypt module is used to salt and encrypt passwords
-var bcrypt = require('bcrypt');
-var User = require('./usersModel');
-var util = require('../config/helpers');
-// var session = require('express-session');
+var User = require('./usersModel.js'),
+    Q    = require('q'),
+    jwt  = require('jwt-simple');
 
 module.exports = {
+  signin: function (req, res, next) {
+    var username = req.body.username,
+        password = req.body.password;
 
-  
-  // Log in an existing user, create a session
-  login: function(req, res, next) {
-    var username = req.body.username;
-    var password = req.body.password;
-
-    User.findOne({ username: username })
-      .exec(function(err,user) {
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: username})
+      .then(function (user) {
         if (!user) {
-          res.send(404);
+          next(new Error('User does not exist'));
         } else {
-          var savedPassword = user.password;
-          User.comparePassword(password, savedPassword, function(err, match) {
-            if (match) {
-              // console.log('logged in');
-              util.createSession(req, res, user);
-              // res.redirect('/#');
-            } else {
-              res.send(404);
-            }
-        });
-      }
-    });
+          return user.comparePasswords(password)
+            .then(function(foundUser) {
+              if (foundUser) {
+                var token = jwt.encode(user, 'secret');
+                res.json({token: token});
+              } else {
+                return next(new Error('No user'));
+              }
+            });
+        }
+      })
+      .fail(function (error) {
+        next(error);
+      });
   },
 
-  // Sign up a new user, and start their first session
-  signup: function(req, res, next) {
-    console.log('at sign up');
-    var username = req.body.username;
-    var password = req.body.password;
+  signup: function (req, res, next) {
+    var username  = req.body.username,
+        password  = req.body.password,
+        create,
+        newUser;
 
-    User.findOne({ username: username })
-    .exec(function(err, user) {
-      if (!user) {
-        console.log('new users')
-        var newUser = new User({
-          username: username,
-          password: password
-        });
-        newUser.save(function(err, newUser) {
-          if (err) {
-            res.send(500, err);
+    var findOne = Q.nbind(User.findOne, User);
+
+    // check to see if user already exists
+    findOne({username: username})
+      .then(function(user) {
+        if (user) {
+          next(new Error('User already exist!'));
+        } else {
+          // make a new user if not one
+          create = Q.nbind(User.create, User);
+          newUser = {
+            username: username,
+            password: password
+          };
+          return create(newUser);
+        }
+      })
+      .then(function (user) {
+        // create token to send back for auth
+        var token = jwt.encode(user, 'secret');
+        res.json({token: token});
+      })
+      .fail(function (error) {
+        next(error);
+      });
+  },
+
+  checkAuth: function (req, res, next) {
+    // checking to see if the user is authenticated
+    // grab the token in the header is any
+    // then decode the token, which we end up being the user object
+    // check to see if that user exists in the database
+    var token = req.headers['x-access-token'];
+    if (!token) {
+      next(new Error('No token'));
+    } else {
+      var user = jwt.decode(token, 'secret');
+      var findUser = Q.nbind(User.findOne, User);
+      findUser({username: user.username})
+        .then(function (foundUser) {
+          if (foundUser) {
+            res.send(200);
+          } else {
+            res.send(401);
           }
-          util.createSession(req, res, newUser);
+        })
+        .fail(function (error) {
+          next(error);
         });
-      } else {
-        console.log('Account already exists');
-        res.send(404);
-      }
-    });
+    }
   }
-
 };
