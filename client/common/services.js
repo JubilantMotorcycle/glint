@@ -113,7 +113,8 @@ glintServices.factory('Auth', function ($http, $location, $window) {
       data: user
     })
     .then(function (resp) {
-      return resp.data.token;
+      console.log("client side", resp.data);
+      return resp.data;
     });
   };
 

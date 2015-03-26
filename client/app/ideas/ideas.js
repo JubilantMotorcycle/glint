@@ -35,6 +35,8 @@ angular.module('glint.ideas', [])
     // Escape user input.
     self.idea.title = _.escape(self.idea.title);
     self.idea.text = _.escape(self.idea.text);
+    console.log('window username', localStorage.getItem('com.glint.user'));
+    self.idea.created_by = _.escape(localStorage.getItem('com.glint.user'));
     var idea = JSON.stringify(self.idea);
     
     // POST new idea, display confirmation, redisplay all ideas.

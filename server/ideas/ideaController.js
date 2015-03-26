@@ -50,7 +50,8 @@ module.exports = {
     // Create a new document from the Idea model. If successfully created then the new Idea document is returned.
     var newIdea = {
       title: req.body.title,
-      text: req.body.text
+      text: req.body.text,
+      created_by: req.body.created_by,
     };
 
     createIdea(newIdea)
