@@ -306,6 +306,7 @@ a.glint-logo-icon:link{
 
 .details-comments {
   width: 50%;
+  float: right;
 }
 
 .idea-info {

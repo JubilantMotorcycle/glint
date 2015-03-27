@@ -36,7 +36,7 @@ angular.module( 'glint.ideaDetail', [] )
       console.log( 'submitting yourself as a collaborator' );
 
       // Escape user input.
-      self.newCollaborator.username = 'Miguel';
+      self.newCollaborator.created_by = 'Miguel';
       self.newCollaborator.idea_id = self._id;
       self.newCollaborator.role = _.escape( self.newCollaborator.role );
       var collab = JSON.stringify( self.newCollaborator );
@@ -65,15 +65,14 @@ angular.module( 'glint.ideaDetail', [] )
       // User input will need to be escaped, and stringified. Refer to the comment schema for the fields needed, but likely `self.comment.text`, `self.comment.idea_id`, and `self.comment.created_by` will be necessary.
 
       // Escape user input.
-      self.newComment.username = 'Gertrude';
+      self.newComment.created_by = 'Gertrude';
       self.newComment.idea_id = self._id;
       self.newComment.text = _.escape( self.newComment.text );
       var comm = JSON.stringify( self.newComment );
       console.log( "comm: ", comm );
-      var newComment = JSON.stringify( comm );
 
       // POST new comment, redisplay all ideas.
-      IdeaDetail.createComment( newComment )
+      IdeaDetail.createComment( comm )
         .then(function (response){
           self.init();
         })

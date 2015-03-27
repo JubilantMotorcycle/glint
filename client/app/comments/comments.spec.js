@@ -39,14 +39,14 @@ describe('CommentsCtrl', function (){
     ctrl.comment = {};
   });
 
-  it('should have a displayComments function', function (){
-    expect(ctrl.displayComments).to.be.a('function');
-  });
+  // it('should have a displayComments function', function (){
+  //   expect(ctrl.displayComments).to.be.a('function');
+  // });
 
-  it('should be able to make a successful GET request with displayComments()', function (){
-    var mockIdea_id = '5199aaa';
-    $httpBackend.expectGET("/api/comments").respond(200, '');
-    ctrl.displayComments(mockIdea_id);
-    $httpBackend.flush();
-  });
+  // it('should be able to make a successful GET request with displayComments()', function (){
+  //   var mockIdea_id = '5199aaa';
+  //   $httpBackend.expectGET("/api/comments").respond(200, '');
+  //   ctrl.displayComments(mockIdea_id);
+  //   $httpBackend.flush();
+  // });
 });

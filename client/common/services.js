@@ -59,14 +59,17 @@ glintServices.factory( 'IdeaDetail', function( $http ) {
     } );
   };
 
-  var removeCollaborator = function( user_id ) {
+  var editCollaborator = function( user_id ) {
+  };
 
+  var removeCollaborator = function( user_id ) {
   };
 
   var createComment = function( comment ) {
+    console.log('factory creating your comment');
     return $http( {
       method: 'POST',
-      url: '/api/comments',
+      url: '/api/comments/',
       data: comment
     } ).then( function( response ) {
       return response.data;
@@ -76,24 +79,32 @@ glintServices.factory( 'IdeaDetail', function( $http ) {
   };
 
   // not necessary at this scale, because getIdeas returns all comments
-  var getComments = function( idea_id ) {
-    return $http( {
-      method: 'GET',
-      url: '/api/comments',
-      data: idea_id
-    } ).then( function( response ) {
-      return response.data;
-    } ).catch( function( error ) {
-      console.error( 'getComments error', error );
-    } );
+  // var getComments = function( idea_id ) {
+  //   return $http( {
+  //     method: 'GET',
+  //     url: '/api/comments',
+  //     data: idea_id
+  //   } ).then( function( response ) {
+  //     return response.data;
+  //   } ).catch( function( error ) {
+  //     console.error( 'getComments error', error );
+  //   } );
+  // };
+
+  var editCollaborator = function( user_id ) {
+  };
+
+  var removeCollaborator = function( user_id ) {
   };
 
   return {
     getIdea: getIdea,
+
     addCollaborator: addCollaborator,
     removeCollaborator: removeCollaborator,
+
     createComment: createComment,
-    getComments: getComments
+    // getComments: getComments
   };
 } );
 
@@ -219,34 +230,37 @@ glintServices.factory( 'UserInfo', function() {
   };
 });
 
-glintServices.factory( 'Comments', function( $http ) {
-  var createComment = function( comment ) {
-    return $http( {
-      method: 'POST',
-      url: '/api/comments',
-      data: comment
-    } ).then( function( response ) {
-      return response.data;
-    } ).catch( function( error ) {
-      console.error( 'createComments error', error );
-    } );
 
-  };
+// merged into IdeaDetail factory
+// glintServices.factory( 'Comments', function( $http ) {
+//   var createComment = function( comment ) {
+//     return $http( {
+//       method: 'POST',
+//       url: '/api/comments',
+//       data: comment
+//     } ).then( function( response ) {
+//       return response.data;
+//     } ).catch( function( error ) {
+//       console.error( 'createComments error', error );
+//     } );
 
-  var getComments = function( idea_id ) {
-    return $http( {
-      method: 'GET',
-      url: '/api/comments',
-      data: idea_id
-    } ).then( function( response ) {
-      return response.data;
-    } ).catch( function( error ) {
-      console.error( 'getComments error', error );
-    } );
-  };
+//   };
 
-  return {
-    createComment: createComment,
-    getComments: getComments
-  };
-});
+//   var getComments = function( idea_id ) {
+//     return $http( {
+//       method: 'GET',
+//       url: '/api/comments',
+//       data: idea_id
+//     } ).then( function( response ) {
+//       return response.data;
+//     } ).catch( function( error ) {
+//       console.error( 'getComments error', error );
+//     } );
+//   };
+
+//   return {
+//     createComment: createComment,
+//     getComments: getComments
+//   };
+// } );
+
