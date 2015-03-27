@@ -20,7 +20,7 @@ angular.module( 'glint.ideaDetail', [] )
         self.idea = idea;
         console.log(self.idea);
         self.collaborators = self.idea.collaborators;
-        self.comments = self.idea.comments;
+        self.comments = self.idea.comments.reverse();
 
         // TODO: figure out whether current user is creator or a collaborator
         // self.userIsCreator =
