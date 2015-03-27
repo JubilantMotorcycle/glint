@@ -19,8 +19,11 @@ angular.module( 'glint.ideaDetail', [] )
         console.log( self.idea );
         self.collaborators = self.idea.collaborators;
         self.comments = self.idea.comments.reverse();
-
-        // TODO: figure out whether current user is creator or a collaborator
+        // Figure out whether current user is creator or a collaborator
+        console.log('username? ', UserInfo.getUsername());
+        self.userIsCreator = ( UserInfo.getUsername() === self.idea.created_by );
+        console.log('are you admin? ', UserInfo.getUsername());
+        // self.userRole = 
         // self.userIsCreator =
         // self.userIsCollaborator =
       } );
@@ -44,19 +47,22 @@ angular.module( 'glint.ideaDetail', [] )
     };
 
     self.deleteIdea = function() {
-      console.log('deleting this dumb idea');
+      console.log('shall we this dumb idea?');
+      if (confirm('Are you sure you want to delete this idea? All collaborations and comments will be deleted')) {
+        console.log('deleting this dumb idea');
 
-      // TODO: add a check to make sure you want to delete this idea
+        // TODO: add a check to make sure you want to delete this idea
 
-      // DELETE idea, redirect to homepage.
-      IdeaDetail.deleteIdea( self._id )
-        .then( function( response ) {
-          // redirect to homepage
-          $location.path('/');
-        } )
-        .catch( function( error ) {
-          console.error( 'deleteIdea error', error );
-        } ); 
+        // DELETE idea, redirect to homepage.
+        IdeaDetail.deleteIdea( self._id )
+          .then( function( response ) {
+            // redirect to homepage
+            $location.path('/');
+          } )
+          .catch( function( error ) {
+            console.error( 'deleteIdea error', error );
+          } ); 
+      }
     };
 
     // Submit a new idea.
