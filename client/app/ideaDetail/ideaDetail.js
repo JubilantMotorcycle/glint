@@ -40,9 +40,23 @@ angular.module( 'glint.ideaDetail', [] )
         } )
         .catch( function( error ) {
           console.error( 'editDescription error', error );
-        } );
+        } ); 
+    };
 
-      
+    self.deleteIdea = function() {
+      console.log('deleting this dumb idea');
+
+      // TODO: add a check to make sure you want to delete this idea
+
+      // // DELETE idea, redirect to homepage.
+      // IdeaDetail.deleteIdea( self._id )
+      //   .then( function( response ) {
+      //     // redirect to homepage
+      //     $location.path('/');
+      //   } )
+      //   .catch( function( error ) {
+      //     console.error( 'deleteIdea error', error );
+      //   } ); 
     };
 
     // Submit a new idea.

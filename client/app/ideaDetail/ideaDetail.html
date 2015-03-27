@@ -3,6 +3,9 @@
 <div class="jumbotron jumbo-top">
   <h1 class="animated fadeInUp">{{clctrl.idea.title}}</h1>
   <h4 class="animated fadeInUp">Created {{ clctrl.idea.created_at | moment }} by {{ clctrl.idea.created_by }}</h4>
+  <!-- Delete this idea (TODO: only let admin do this) -->
+  <button ng-if="true" type="submit" class="btn btn-default idea-submit-button ng-cloak animated fadeInUp" ng-click="clctrl.deleteIdea()">Delete this idea</button>
+  <!--- TODO: add a check to make sure you want to delete this idea -->
 </div>
 
 <!-- User Feedback Message Area -->
