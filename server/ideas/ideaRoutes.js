@@ -12,5 +12,6 @@ module.exports = function (app) {
       .post(ideaController.newIdea);
     app.route('/*')
       .get(ideaController.oneIdea)
-      .put(ideaController.editDescription);
+      .put(ideaController.editDescription)
+      .delete(ideaController.deleteIdea);
 };

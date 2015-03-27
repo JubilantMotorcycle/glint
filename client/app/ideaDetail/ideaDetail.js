@@ -48,15 +48,15 @@ angular.module( 'glint.ideaDetail', [] )
 
       // TODO: add a check to make sure you want to delete this idea
 
-      // // DELETE idea, redirect to homepage.
-      // IdeaDetail.deleteIdea( self._id )
-      //   .then( function( response ) {
-      //     // redirect to homepage
-      //     $location.path('/');
-      //   } )
-      //   .catch( function( error ) {
-      //     console.error( 'deleteIdea error', error );
-      //   } ); 
+      // DELETE idea, redirect to homepage.
+      IdeaDetail.deleteIdea( self._id )
+        .then( function( response ) {
+          // redirect to homepage
+          $location.path('/');
+        } )
+        .catch( function( error ) {
+          console.error( 'deleteIdea error', error );
+        } ); 
     };
 
     // Submit a new idea.

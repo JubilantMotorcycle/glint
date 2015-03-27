@@ -73,8 +73,7 @@ module.exports = {
     console.log(idea_id);
     console.log(req.body.newDescription);
 
-    // Bind the Mongoose create method to the Idea model, so that the Q module can use promises with it.a.create, Idea);
-
+    // Bind the Mongoose create method to the Idea model, so that the Q module can use promises with it
     var query = Idea.where({ _id: idea_id });
     query.findOne(function(err, idea){
       if (err) return handleError(err);
@@ -88,13 +87,21 @@ module.exports = {
         res.send(404);
       }
     });
+  },
 
-    // Create a new document from the Idea model. If successfully created then the new Idea document is returned.
-    var newIdea = {
-      title: req.body.title,
-      text: req.body.text,
-      created_by: req.body.created_by,
-    };
+  deleteIdea: function(req, res, next) {
+
+    var idea_id = req.url.slice(1);
+    console.log(idea_id);
+
+    Idea.remove({ _id: idea_id }, function(err) {
+      if (!err) {
+        res.send(204);
+      }
+      else {
+        res.send(404);
+      }
+    });
   }
 
 };
