@@ -38,7 +38,6 @@ module.exports = {
         res.send(404);
       }
     });
-
   },
 
   // Add a new idea to the MongoDB database.
@@ -64,6 +63,36 @@ module.exports = {
       .fail(function(error) {
         next(error);
       });
+  },
+
+  // Edit the idea description in the database
+  editDescription: function(req, res, next) {
+    console.log('wooot');
+
+    var idea_id = req.url.slice(1);
+
+    console.log(idea_id);
+
+    // // Bind the Mongoose create method to the Idea model, so that the Q module can use promises with it.
+    // var createIdea = Q.nbind(Idea.create, Idea);
+    // console.log(req.body);
+
+    // // Create a new document from the Idea model. If successfully created then the new Idea document is returned.
+    // var newIdea = {
+    //   title: req.body.title,
+    //   text: req.body.text,
+    //   created_by: req.body.created_by,
+    // };
+
+    // createIdea(newIdea)
+    //   .then(function (createdIdea) {
+    //     if (createdIdea) {
+    //         res.json(createdIdea);
+    //     }
+    //   })
+    //   .fail(function(error) {
+    //     next(error);
+    //   });
   }
 
 };
