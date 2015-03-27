@@ -306,6 +306,7 @@ a.glint-logo-icon:link{
 
 .details-comments {
   width: 50%;
+  float: right;
 }
 
 .idea-info {
@@ -328,4 +329,17 @@ a.glint-logo-icon:link{
 
 .form-group {
   width: 75%;
+}
+
+.comment {
+  margin: 5px;
+  padding: 5px;
+  background-color: #F2F2F2;
+  margin-top: 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+}
+
+.comment:hover {
+  text-decoration: underline;
 }

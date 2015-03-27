@@ -21,8 +21,9 @@ var IdeaSchema = new mongoose.Schema({
       role: String
     }],
     comments: [{
-      username: String,
-      comment: String
+      text: String,
+      created_by: { type: String, default: 'anonymous' },
+      created_at: { type: Date, default: Date.now },
     }],
     delete_flag: { type: Boolean, default: false }
 });

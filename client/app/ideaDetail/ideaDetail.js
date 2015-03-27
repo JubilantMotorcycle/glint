@@ -7,9 +7,6 @@ angular.module( 'glint.ideaDetail', [] )
   .controller( 'IdeaCollaboratorsCtrl', function( $stateParams, IdeaDetail, Ideas, $filter, $route ) {
     var self = this;
 
-    self.postSuccess = false;
-    self.submitted = false;
-    
     self.newCollaborator = {};
     self.newComment = {};
 
@@ -23,7 +20,7 @@ angular.module( 'glint.ideaDetail', [] )
         self.idea = idea;
         console.log(self.idea);
         self.collaborators = self.idea.collaborators;
-        self.comments = self.idea.comments;
+        self.comments = self.idea.comments.reverse();
 
         // TODO: figure out whether current user is creator or a collaborator
         // self.userIsCreator =
@@ -36,7 +33,7 @@ angular.module( 'glint.ideaDetail', [] )
       console.log( 'submitting yourself as a collaborator' );
 
       // Escape user input.
-      self.newCollaborator.username = 'Miguel';
+      self.newCollaborator.created_by = 'Miguel';
       self.newCollaborator.idea_id = self._id;
       self.newCollaborator.role = _.escape( self.newCollaborator.role );
       var collab = JSON.stringify( self.newCollaborator );
@@ -45,11 +42,8 @@ angular.module( 'glint.ideaDetail', [] )
       // POST new idea, display confirmation, redisplay all ideas.
       IdeaDetail.addCollaborator( collab )
         .then( function( response ) {
-          // Show user feedback.
-          self.postSuccess = true;
-          // Hide idea description field.
-          self.submitted = false;
           self.init();
+          self.newCollaborator = {};
         } )
         .catch( function( error ) {
           console.error( 'createIdea error', error );
@@ -61,21 +55,18 @@ angular.module( 'glint.ideaDetail', [] )
     self.submitComment = function (idea_id){
       // if(nav.token.userName){
 
-      // The comment object needs to be populated with form inputs here.
-      // User input will need to be escaped, and stringified. Refer to the comment schema for the fields needed, but likely `self.comment.text`, `self.comment.idea_id`, and `self.comment.created_by` will be necessary.
-
       // Escape user input.
-      self.newComment.username = 'Gertrude';
+      self.newComment.created_by = 'Gertrude';
       self.newComment.idea_id = self._id;
       self.newComment.text = _.escape( self.newComment.text );
       var comm = JSON.stringify( self.newComment );
       console.log( "comm: ", comm );
-      var newComment = JSON.stringify( comm );
 
       // POST new comment, redisplay all ideas.
-      IdeaDetail.createComment( newComment )
+      IdeaDetail.createComment( comm )
         .then(function (response){
           self.init();
+          self.newComment = {};
         })
         .catch(function (error){
           console.error('newComment error', error);

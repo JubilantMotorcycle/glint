@@ -65,6 +65,9 @@
     </form>
 
     <!-- List Comments, row by row -->
-    <h3 class="idea-title" ng-repeat="collaborator in clctrl.comments track by comment._id">{{ comment.username }} - {{ comment.text }}</h3>
+    <div class="comment" ng-repeat="comment in clctrl.comments track by comment._id">
+      <p class="timestamp-author">Posted {{ comment.created_at | moment }} by {{ comment.created_by }}</p>
+      <h5 class="idea-description">{{ comment.text }}</h5>
+    </div>
 </div>
 </div>
