@@ -7,7 +7,7 @@ angular.module('glint.auth', [])
 
 .controller('AuthCtrl', function($window, $location, Auth, UserInfo){
   var self = this;
-  self.user = {};
+  self.user = {}; 
 
   // Allow user to declare who they are to the system.
   self.login = function() {
