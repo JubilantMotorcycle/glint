@@ -13,6 +13,7 @@ var CommentSchema = new mongoose.Schema({
     idea_id: String,
     created_by: { type: String, default: 'anonymous' },
     created_at: { type: Date, default: Date.now },
+    votes: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);
