@@ -59,6 +59,19 @@ glintServices.factory( 'IdeaDetail', function( $http ) {
     } );
   };
 
+  var deleteIdea = function( idea_id ) {
+    console.log( 'factory deleting idea' );
+    return $http( {
+      method: 'DELETE',
+      url: '/api/ideas/' + idea_id,
+    } ).then( function( response ) {
+      console.log(response);
+      return response.data;
+    } ).catch( function( error ) {
+      console.log( 'deleteIdea error', error );
+    } );
+  };
+
   var addCollaborator = function( collab ) {
     console.log( 'factory adding collab' );
     return $http( {
@@ -113,6 +126,7 @@ glintServices.factory( 'IdeaDetail', function( $http ) {
   return {
     getIdea: getIdea,
     editDescription: editDescription,
+    deleteIdea: deleteIdea,
 
     addCollaborator: addCollaborator,
     removeCollaborator: removeCollaborator,

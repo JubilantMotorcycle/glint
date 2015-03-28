@@ -11,5 +11,7 @@ module.exports = function (app) {
       .get(ideaController.allIdeas)
       .post(ideaController.newIdea);
     app.route('/*')
-      .get(ideaController.oneIdea);
+      .get(ideaController.oneIdea)
+      .put(ideaController.editDescription)
+      .delete(ideaController.deleteIdea);
 };
