@@ -350,8 +350,17 @@ a.glint-logo-icon:link{
   text-decoration: underline;
 }
 
+.edit-description-button {
+  position: relative;
+  float: right;
+/*  top: 0;
+  right: 0;
+*/
+*/}
+
 .description-edit {
   margin-bottom: 10px;
   width: 650px !important;
   height: 60px;
 }
+

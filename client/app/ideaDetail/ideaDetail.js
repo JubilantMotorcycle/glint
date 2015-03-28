@@ -7,6 +7,8 @@ angular.module( 'glint.ideaDetail', [] )
   .controller( 'IdeaCollaboratorsCtrl', function( $stateParams, IdeaDetail, UserInfo, Ideas, $filter, $route, $location ) {
     var self = this;
 
+
+
     self.newCollaborator = {};
     self.newComment = {};
 
@@ -28,8 +30,15 @@ angular.module( 'glint.ideaDetail', [] )
         // self.userRole = 
         // self.userIsCreator =
         // self.userIsCollaborator =
+
+        self.editingDescription = false;
       } );
     };
+
+    self.toggleEditingDescription = function() {
+      console.log("let's edit");
+      self.editingDescription = !self.editingDescription;
+    }
 
     self.editDescription = function() {
       console.log('editing idea description');
@@ -41,6 +50,7 @@ angular.module( 'glint.ideaDetail', [] )
       // PUT new description to idea, display confirmation, redisplay page.
       IdeaDetail.editDescription( self._id, data )
         .then( function( response ) {
+
           self.init();
         } )
         .catch( function( error ) {
