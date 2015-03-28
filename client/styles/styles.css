@@ -57,6 +57,7 @@ textarea.form-description-control {
 }
 
 button.idea-submit-button {
+  margin-top: 8px;
 }
 
 .row {
@@ -360,7 +361,7 @@ a.glint-logo-icon:link{
 
 .description-edit {
   margin-bottom: 10px;
-  width: 650px !important;
+  width: 100% !important;
   height: 60px;
 }
 
