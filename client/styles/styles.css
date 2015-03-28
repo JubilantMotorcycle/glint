@@ -349,3 +349,9 @@ a.glint-logo-icon:link{
 .comment:hover {
   text-decoration: underline;
 }
+
+.description-edit {
+  margin-bottom: 10px;
+  width: 650px !important;
+  height: 60px;
+}

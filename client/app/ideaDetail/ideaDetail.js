@@ -19,10 +19,12 @@ angular.module( 'glint.ideaDetail', [] )
         console.log( self.idea );
         self.collaborators = self.idea.collaborators;
         self.comments = self.idea.comments.reverse();
+
         // Figure out whether current user is creator or a collaborator
-        console.log('username? ', UserInfo.getUsername());
-        self.userIsCreator = ( UserInfo.getUsername() === self.idea.created_by );
-        console.log('are you admin? ', UserInfo.getUsername());
+        // this may or may not be secure
+        self.token = JSON.parse( localStorage.getItem( 'com.glint' ) );
+        self.username = self.token.username || UserInfo.getUsername();
+        self.userIsCreator = ( self.username === self.idea.created_by );
         // self.userRole = 
         // self.userIsCreator =
         // self.userIsCollaborator =
@@ -119,4 +121,20 @@ angular.module( 'glint.ideaDetail', [] )
     };
 
     self.init();
-  } );
+  } )
+  .directive('elastic', [
+    '$timeout',
+    function($timeout) {
+      return {
+        restrict: 'A',
+        link: function($scope, element) {
+          var resize = function() {
+            return (element[0].style.height = "" + element[0].scrollHeight) + "px";
+          };
+          element.on("blur keyup change", resize);
+          $timeout(resize, 0);
+        }
+      };
+    }
+  ])
+  ;

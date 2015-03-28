@@ -5,7 +5,7 @@
   <h4 class="animated fadeInUp">Created {{ clctrl.idea.created_at | moment }} by {{ clctrl.idea.created_by }}</h4>
   <!-- Delete this idea (only let admin do this) -->
 
-  <h5 ng-if="clctrl.userIsCreator">You created this idea</h5>
+  <h5 ng-if="clctrl.userIsCreator" class="animated fadeInUp">You created this idea</h5>
   <button ng-if="clctrl.userIsCreator" type="submit" class="btn btn-default idea-submit-button ng-cloak animated fadeInUp" ng-click="clctrl.deleteIdea()">Delete this idea</button>
 <!--   <div>
  -->  <!--- TODO: add a check to make sure you want to delete this idea -->
@@ -42,7 +42,7 @@
 
           <!-- Enter Description TODO: make height automatic -->
           <div class="form-description">
-            <textarea name="description-input" rows="3" class="form-control form-description-control" placeholder="Edit description here" ng-model="clctrl.idea.text" required></textarea>
+            <textarea name="description-input" rows="3" class="description-edit" placeholder="Edit description here" elastic ng-model="clctrl.idea.text" required></textarea>
           </div>
           <button type="submit" class="btn btn-default idea-submit-button">Edit Description</button>
         </form>
