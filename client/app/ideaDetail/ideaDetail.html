@@ -3,9 +3,12 @@
 <div class="jumbotron jumbo-top">
   <h1 class="animated fadeInUp">{{clctrl.idea.title}}</h1>
   <h4 class="animated fadeInUp">Created {{ clctrl.idea.created_at | moment }} by {{ clctrl.idea.created_by }}</h4>
-  <!-- Delete this idea (TODO: only let admin do this) -->
-  <button ng-if="true" type="submit" class="btn btn-default idea-submit-button ng-cloak animated fadeInUp" ng-click="clctrl.deleteIdea()">Delete this idea</button>
-  <!--- TODO: add a check to make sure you want to delete this idea -->
+  <!-- Delete this idea (only let admin do this) -->
+
+  <h5 ng-if="clctrl.userIsCreator" class="animated fadeInUp">You created this idea</h5>
+  <button ng-if="clctrl.userIsCreator" type="submit" class="btn btn-primary idea-submit-button ng-cloak animated fadeInUp" ng-click="clctrl.deleteIdea()">Delete this idea</button>
+<!--   <div>
+ -->  <!--- TODO: add a check to make sure you want to delete this idea -->
 </div>
 
 <!-- User Feedback Message Area -->
@@ -31,17 +34,17 @@
       <div>
         <h3>Description</h3>
       </div>
+      <button ng-if="clctrl.userIsCreator" type="submit" class="btn btn-primary idea-submit-button edit-description-button ng-cloak animated fadeInUp" ng-click="clctrl.toggleEditingDescription()">Edit Description</button>
         <p>{{ clctrl.idea.text }}</p>
-      </div>
-
-        <!-- Edit Idea Description (TODO: only let admin do this) -->
-        <form ng-if="true" class="navbar-form navbar-middle ng-cloak animated fadeInUp" ng-submit="clctrl.editDescription()">
+        <!-- Edit Idea Description (only let admin do this) -->
+      </div ng-if="clctrl.userIsCreator">
+        <form ng-if="clctrl.editingDescription" class="navbar-form navbar-middle ng-cloak animated fadeInUp" ng-submit="clctrl.editDescription()">
 
           <!-- Enter Description TODO: make height automatic -->
           <div class="form-description">
-            <textarea name="description-input" rows="3" class="form-control form-description-control" placeholder="Edit description here" ng-model="clctrl.idea.text" required></textarea>
+            <textarea name="description-input" rows="3" class="description-edit" placeholder="Edit description here" elastic ng-model="clctrl.idea.text" required></textarea>
           </div>
-          <button type="submit" class="btn btn-default idea-submit-button">Edit Description</button>
+          <button type="submit" class="btn btn-default idea-submit-button">Update Description</button>
         </form>
       <div>
     </div>

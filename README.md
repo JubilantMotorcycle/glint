@@ -6,12 +6,16 @@
 - View the glint project website [here](http://adventurous-starfish.github.io/glint/)
 - View our annotated source code [here](http://adventurous-starfish.github.io/glint/docs/glint.html)
 
-## Team
+## Greenfield Team
 
   - __Product Owner__: David Rabkin
   - __Scrum Master__: Anneke Floor
   - __Project Manager__: Kalev Roomann-Kurrik
   - __Development Team Members__: Michael Hari
+
+## Legacy Team
+
+  - __Full Stack Engineers__: Jason Chang, Steve Webster, Scott Kao, Danny Delott
 
 ## Table of Contents
 

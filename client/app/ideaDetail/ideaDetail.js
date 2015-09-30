@@ -7,6 +7,8 @@ angular.module( 'glint.ideaDetail', [] )
   .controller( 'IdeaCollaboratorsCtrl', function( $stateParams, IdeaDetail, UserInfo, Ideas, $filter, $route, $location ) {
     var self = this;
 
+
+
     self.newCollaborator = {};
     self.newComment = {};
 
@@ -20,11 +22,23 @@ angular.module( 'glint.ideaDetail', [] )
         self.collaborators = self.idea.collaborators;
         self.comments = self.idea.comments.reverse();
 
-        // TODO: figure out whether current user is creator or a collaborator
+        // Figure out whether current user is creator or a collaborator
+        // this may or may not be secure
+        self.token = JSON.parse( localStorage.getItem( 'com.glint' ) );
+        self.username = self.token.username || UserInfo.getUsername();
+        self.userIsCreator = ( self.username === self.idea.created_by );
+        // self.userRole = 
         // self.userIsCreator =
         // self.userIsCollaborator =
+
+        self.editingDescription = false;
       } );
     };
+
+    self.toggleEditingDescription = function() {
+      console.log("let's edit");
+      self.editingDescription = !self.editingDescription;
+    }
 
     self.editDescription = function() {
       console.log('editing idea description');
@@ -36,6 +50,7 @@ angular.module( 'glint.ideaDetail', [] )
       // PUT new description to idea, display confirmation, redisplay page.
       IdeaDetail.editDescription( self._id, data )
         .then( function( response ) {
+
           self.init();
         } )
         .catch( function( error ) {
@@ -44,19 +59,22 @@ angular.module( 'glint.ideaDetail', [] )
     };
 
     self.deleteIdea = function() {
-      console.log('deleting this dumb idea');
+      console.log('shall we this dumb idea?');
+      if (confirm('Are you sure you want to delete this idea? All collaborations and comments will be deleted')) {
+        console.log('deleting this dumb idea');
 
-      // TODO: add a check to make sure you want to delete this idea
+        // TODO: add a check to make sure you want to delete this idea
 
-      // DELETE idea, redirect to homepage.
-      IdeaDetail.deleteIdea( self._id )
-        .then( function( response ) {
-          // redirect to homepage
-          $location.path('/');
-        } )
-        .catch( function( error ) {
-          console.error( 'deleteIdea error', error );
-        } ); 
+        // DELETE idea, redirect to homepage.
+        IdeaDetail.deleteIdea( self._id )
+          .then( function( response ) {
+            // redirect to homepage
+            $location.path('/');
+          } )
+          .catch( function( error ) {
+            console.error( 'deleteIdea error', error );
+          } ); 
+      }
     };
 
     // Submit a new idea.
@@ -113,4 +131,20 @@ angular.module( 'glint.ideaDetail', [] )
     };
 
     self.init();
-  } );
+  } )
+  .directive('elastic', [
+    '$timeout',
+    function($timeout) {
+      return {
+        restrict: 'A',
+        link: function($scope, element) {
+          var resize = function() {
+            return (element[0].style.height = "" + element[0].scrollHeight) + "px";
+          };
+          element.on("blur keyup change", resize);
+          $timeout(resize, 0);
+        }
+      };
+    }
+  ])
+  ;
